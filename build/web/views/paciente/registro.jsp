@@ -9,25 +9,26 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Informacion del paciente</title>
-  <link rel="stylesheet" href="../css/login.css">
+  <title>Información del paciente</title>
+  <link rel="stylesheet" href="../../css/default.css">
 
 </head>
 <body>
 <!-- partial:index.partial.html -->
 <div class="login-page">
   <div class="form">
-    <form class="register-form" action="AccionRegistro" method="post">
-         <input type="text" name="nombre" placeholder="nombre"/>
+      <h2>Información del Paciente</h2>
+    <form class="register-form" action="AccionPacienteRegistro" method="post">
+        <input type="text" name="nombre" placeholder="nombre"/>
         <input type="text" name="apellido1" placeholder="primer apellido"/>
         <input type="text" name="apellido2" placeholder="segundo apellido"/>
-        <select name="genero">
-            <option value="masculino">Masculino</option>
-            <option value="femenino">Femenino</option>
-            <option value="otro">Otro</option>
+        <select name="genero" placeholder="genero">
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+            <option value="O">Otro</option>
         </select>
-        <input type="text" name="fecha_nacimiento" placeholder="dd/MM/yyyy" onfocus="(this.type='date')">
-        <input type="text" name="telefono" min="8" max="8">
+        <input type="text" name="fecha_nacimiento" placeholder="fecha nacimiento" onfocus="(this.type='date')">
+        <input type="tel" name="telefono" placeholder="telefono" maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         <input class="button" type="submit" value="Guardar">
     </form>
   </div>

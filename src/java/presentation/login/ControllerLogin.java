@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import logic.Service;
 import static java.lang.Integer.parseInt;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.Persona;
-import logic.Usuario;
 
-@WebServlet(name = "ControllerLogin", urlPatterns = {"/ControllerLogin"})
+@WebServlet(name = "ControllerLogin", urlPatterns = {"/AccionLogin"})
 public class ControllerLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -56,7 +54,6 @@ public class ControllerLogin extends HttpServlet {
         if (request.getParameter("ced_usuario").isEmpty()) {
             errores.put("ced_usuario", "Numeo de identificación requerido");
         }
-
         if (request.getParameter("contrasena").isEmpty()) {
             errores.put("contrasena", "Contraseña requerida");
         }
@@ -69,32 +66,6 @@ public class ControllerLogin extends HttpServlet {
         model.getCurrent().setContrasena(request.getParameter("contrasena"));
     }
     
-    public String show(HttpServletRequest request){
-        return this.showAction(request);
-    }
-    
-    public String showAction(HttpServletRequest request){
-      /*  ModelLogin model= (ModelLogin) request.getAttribute("model");
-        Service serv = Service.instance();
-        HttpSession session = request.getSession(true);
-        Persona per = (Persona) session.getAttribute("usuario");
-        Persona t1;
-        try {
-            t1 = Service.instance().personaAll();
-            session.removeAttribute("usuario");
-            session.setAttribute("persona", t1);
-        } catch (Exception ex) {
-            t1 = null;
-        }
-        try {
-            model.setCurrent(t1);
-            return "/presentation/cartelera/login.jsp";
-        } catch (Exception ex) {
-            return "";
-        }*/
-      return "";
-    }    
-
     public String loginAction(HttpServletRequest request) {
         ModelLogin model = (ModelLogin) request.getAttribute("ModelLogin");
         Service service = Service.instance();

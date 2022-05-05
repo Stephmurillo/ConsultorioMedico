@@ -1,6 +1,6 @@
 <%-- 
-    Document   : registro
-    Created on : May 1, 2022, 8:14:51 PM
+    Document   : infoLaboral
+    Created on : May 4, 2022, 7:36:51 AM
     Author     : muril
 --%>
 
@@ -15,12 +15,10 @@
 <body>
 <div class="login-page">
   <div class="form">
-      <h2>Información del Medico</h2>
+      <h2>Información acerca de horarios y especialidades</h2>
     <form class="register-form" action="AccionMedicoRegistro" method="post">
-        <input type="text" name="nombre" placeholder="nombre"/>
-        <input type="text" name="apellido1" placeholder="primer apellido"/>
-        <input type="text" name="apellido2" placeholder="segundo apellido"/>
-        <select name="genero" placeholder="genero">
+        
+        <select name="especialidades" placeholder="especialidades">
             <option value="M">Masculino</option>
             <option value="F">Femenino</option>
             <option value="O">Otro</option>

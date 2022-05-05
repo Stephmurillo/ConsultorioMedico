@@ -2,33 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package presentation.paciente;
+package presentation.medico;
 
 /**
  *
  * @author muril
  */
 
+import presentation.paciente.*;
 import presentation.registro.*;
 import presentation.login.*;
-import logic.Paciente;
+import logic.Medico;
 
-public class ModelPaciente {
-    Paciente current;
+public class ModelMedico {
+    Medico current;
     
-    public ModelPaciente() {
+    public ModelMedico() {
         this.reset();
     }
     
     public void reset(){
-        setCurrent(new Paciente());        
+        setCurrent(new Medico());        
     }
     
-    public Paciente getCurrent() {
+    public Medico getCurrent() {
         return current;
     }
 
-    public void setCurrent(Paciente current) {
+    public void setCurrent(Medico current) {
         this.current = current;
     }
 }

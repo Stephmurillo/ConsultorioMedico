@@ -1,13 +1,13 @@
-package presentation.paciente;
+package presentation.medico;
 
 import data.DAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;  
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,27 +15,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import logic.Paciente;
+import logic.Medico;
+import logic.Mensualidad;
 import logic.Persona;
 import logic.Usuario;
 
-@WebServlet(name = "ControllerPaciente", urlPatterns = {"/AccionPacienteRegistro", "/views/paciente/AccionPacienteRegistro"})
-public class ControllerPaciente extends HttpServlet {
+@WebServlet(name = "ControllerMedico", urlPatterns = {"/AccionMedicoRegistro", "/views/medico/AccionMedicoRegistro"})
+public class ControllerMedico extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
     
-    private String crearPaciente(HttpServletRequest request) throws ParseException, SQLException {
+    private String crearMedico(HttpServletRequest request) throws ParseException, SQLException {
         Usuario lastUser = DAO.readLastUsuario();
         Persona persona = new Persona(request.getParameter("nombre"), request.getParameter("apellido1"), request.getParameter("apellido2"), lastUser);
-        Paciente paciente = new Paciente(request.getParameter("genero"), request.getParameter("fecha_nacimiento"), request.getParameter("telefono"), persona.getNombre(), persona.getApellido1(), persona.getApellido2(), lastUser);
-
+        Medico medico = new Medico(request.getParameter("genero"), Double.parseDouble(request.getParameter("costo_consulta")), Integer.parseInt(request.getParameter("frecuencia_citas")),"",persona.getNombre(), persona.getApellido1(), persona.getApellido2(), lastUser, null, null, null);
         try {
             Map<String, String> errores = this.validar(request);
             if (errores.isEmpty()) {
+                int dbStatusMensualidad = crearMensualidad();
                 int dbStatusPersona = DAO.crearPersona(persona);
-                int dbStatusPaciente = DAO.crearPaciente(paciente, dbStatusPersona);
+                int dbStatusPaciente = DAO.crearMedico(medico, dbStatusPersona);
                 
-                if (dbStatusPaciente > 0) return "./../login.jsp";
+                if (dbStatusPaciente > 0) return "./../login.jsp";//cambiar dbstatus
                 else return "./../ViewError.jsp";
             } else {
                 request.setAttribute("errores", errores);
@@ -43,6 +44,22 @@ public class ControllerPaciente extends HttpServlet {
             }
         } catch (Exception e) {
             return "./../ViewError.jsp";
+        }
+    }
+    
+    
+    
+    private int crearMensualidad() throws ParseException, SQLException {
+        LocalDateTime now = LocalDateTime.now();
+        int mes = now.getMonthValue();
+        
+        Mensualidad mensualidad = new Mensualidad(mes,25000.0);
+        try {
+            int dbStatusMensualidad = DAO.crearMensualidad(mensualidad);
+            if (dbStatusMensualidad > 0) return dbStatusMensualidad;//cambiar dbstatus
+                else return 0;
+        } catch (Exception e) {
+            return 0;
         }
     }
 
@@ -57,12 +74,8 @@ public class ControllerPaciente extends HttpServlet {
         if (request.getParameter("apellido2").isEmpty()) {
             errores.put("apellido2", "Apellido 2 requerida");
         }
-        if (request.getParameter("telefono").isEmpty()) {
-            errores.put("telefono", "Telefono requerido");
-        }
         return errores;
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -91,11 +104,11 @@ public class ControllerPaciente extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String ruta ="";
         try {
-            ruta = this.crearPaciente(request);
+            ruta = this.crearMedico(request);
         } catch (ParseException ex) {
-            Logger.getLogger(ControllerPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControllerMedico.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ControllerPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControllerMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         response.sendRedirect(ruta);

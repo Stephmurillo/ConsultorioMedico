@@ -12,43 +12,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import logic.Usuario;
 
-@WebServlet(name = "ControllerRegistro", urlPatterns = {"/AccionRegistro", "/views/AccionRegistro"})
+@WebServlet(name = "ControllerRegistro", urlPatterns = {"/AccionUsuarioRegistro", "/views/AccionUsuarioRegistro"})
 public class ControllerRegistro extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-//        request.setAttribute("ModelLogin", new ModelLogin());
-//        String viewUrl = "";
-//        switch (request.getServletPath()) {
-//            case "/presentation/login/show":
-//                viewUrl = this.show(request);
-//                break;
-//            case "/login":
-//                viewUrl = this.login(request);
-//                break;
-//            case "/presentation/login/logout":
-//              //  viewUrl = this.logout(request);
-//                break;
-//        }
-//        request.getRequestDispatcher(viewUrl).forward(request, response);
     }
     
-    private String crearUsuario(HttpServletRequest request) {
-        Usuario u = new Usuario(Integer.parseInt(request.getParameter("id_rol")),Integer.parseInt(request.getParameter("ced_usuario")),request.getParameter("contrasena"));
+    private String crearUsuario(HttpServletRequest request) {        
+        Usuario u = new Usuario(0, Integer.parseInt(request.getParameter("id_rol")),Integer.parseInt(request.getParameter("ced_usuario")),request.getParameter("contrasena"));
         String idRol = request.getParameter("id_rol");
         
         try {
             Map<String, String> errores = this.validar(request);
             if (errores.isEmpty()) {
                 int dbStatus = DAO.crearUsuario(u);
-                if (dbStatus > 0 && idRol.equals("2")) return "/views/medico/registro.jsp";             
-                if (dbStatus > 0 && idRol.equals("3")) return "/views/paciente/registro.jsp";
-                else return "/views/login.jsp";
+                if (dbStatus > 0 && idRol.equals("2")) return "./medico/registro.jsp";             
+                if (dbStatus > 0 && idRol.equals("3")) return "./paciente/registro.jsp";
+                else return "./login.jsp";
             } else {
                 request.setAttribute("errores", errores);
-                return "/index.jsp";
+                return "./ViewError.jsp";
             }
         } catch (Exception e) {
-            return "/ViewError.jsp";
+            return "./ViewError.jsp";
         }
     }
 
@@ -94,7 +79,8 @@ public class ControllerRegistro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String ruta = this.crearUsuario(request);
-        request.getRequestDispatcher(ruta).forward(request, response);
+//        request.getRequestDispatcher(ruta).forward(request, response);
+        response.sendRedirect(ruta);
     }
 
     /**

@@ -14,13 +14,24 @@ public class Mensualidad {
     double costo;
     char estado;
 
-    public Mensualidad(int id_mensualidad, int mes, double costo) {
-        this.id_mensualidad = id_mensualidad;
+    public Mensualidad( int mes, double costo) {
+        this.id_mensualidad = 0;
         this.mes = mes;
         this.costo = costo;
-        this.estado = 'p'; // inicializa la mensualidad como pendiente de pago
+        this.estado = 'n'; // inicializa la mensualidad como pendiente de pago
     }
 
+    public Mensualidad() {
+        this.id_mensualidad = 0;
+        this.mes = 0;
+        this.costo = 0;
+        this.estado = 'n';
+    }
+
+    public void setMes( int mes) {
+        this.mes = mes;
+    }
+    
     public int getId_mensualidad() {
         return id_mensualidad;
     }

@@ -18,9 +18,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logic.Persona;
 import logic.Usuario;
 
@@ -34,6 +37,7 @@ public class Database {
     }
     public static final String PROPERTIES_FILE_NAME="./database.properties";        
     Connection cnx;
+    
     public Database(){
         cnx = this.getConnection();            
     }
@@ -63,6 +67,15 @@ public class Database {
     
     public PreparedStatement prepareStatement(String statement) throws SQLException {
         return cnx.prepareStatement(statement);
+    }
+    
+    public Statement createStatement() {
+        try {
+            return cnx.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     public int executeUpdate(PreparedStatement statement) {
         try {

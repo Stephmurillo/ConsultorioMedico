@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Medico extends Persona{
     int id_medico;
+    String genero;
     double costo_consulta;
     boolean estado_ingreso;
     int frecuencia_citas;
@@ -20,11 +21,12 @@ public class Medico extends Persona{
     List<Mensualidad> mensualidades;
     List<Horario> horarios;
 
-    public Medico(double costo_consulta, int frecuencia_citas, String ruta_img,
-            int id_persona, String nombre, String apellido1, String apellido2, Usuario usuario, 
+    public Medico(String genero, double costo_consulta, int frecuencia_citas, String ruta_img,
+            String nombre, String apellido1, String apellido2, Usuario usuario, 
             List<Especialidad> especialidades, List<Mensualidad> mensualidades, List<Horario> horarios) {
         super(nombre, apellido1, apellido2, usuario);
         this.id_medico = 0;
+        this.genero = genero;
         this.costo_consulta = costo_consulta;
         this.frecuencia_citas = frecuencia_citas;
         this.ruta_img = ruta_img;
@@ -56,6 +58,10 @@ public class Medico extends Persona{
 
     public List<Horario> getHorarios() {
         return horarios;
+    }
+
+    public String getGenero() {
+        return genero;
     }
 
     public int getId_medico() {

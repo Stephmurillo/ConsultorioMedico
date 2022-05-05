@@ -14,8 +14,8 @@ public class Usuario {
     int ced_usuario;
     String contrasena;
     
-    public Usuario(int id_rol, int ced_usuario, String contrasena) {
-        this.id_usuario = 0;
+    public Usuario(int id_usuario, int id_rol, int ced_usuario, String contrasena) {
+        this.id_usuario = id_usuario;
         this.id_rol = id_rol;
         this.ced_usuario = ced_usuario;
         this.contrasena = contrasena;

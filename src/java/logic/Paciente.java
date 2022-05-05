@@ -13,10 +13,10 @@ import java.util.Date;
 public class Paciente extends Persona{
     int id_paciente;
     String genero;
-    Date fecha_nacimiento;
+    String fecha_nacimiento;
     String telefono;
 
-    public Paciente(String genero, Date fecha_nacimiento, String telefono, String nombre, String apellido1, String apellido2, Usuario usuario) {
+    public Paciente(String genero, String fecha_nacimiento, String telefono, String nombre, String apellido1, String apellido2, Usuario usuario) {
         super(nombre, apellido1, apellido2, usuario);
         this.id_paciente = 0;
         this.genero = genero;
@@ -40,7 +40,7 @@ public class Paciente extends Persona{
         return genero;
     }
 
-    public Date getFecha_nacimiento() {
+    public String getFechaNacimiento() {
         return fecha_nacimiento;
     }
 
